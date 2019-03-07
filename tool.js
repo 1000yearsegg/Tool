@@ -1,9 +1,27 @@
-/*1.1.4*/
-var ecDo = {
-//****************************字符串****************************/
+/*
+ * @Author: liuxingqiao
+ * @LastEditors: liuxingqiao
+ * @Date: 2019-03-01 09:55:41
+ * @LastEditTime: 2019-03-07 17:36:05
+ */
+var Tool = {
+
+    // 1.字符串
+    // 2.数组
+    // 3.对象及其他
+    // 4.cookie
+    // 5.dom
+
+    //****************************字符串****************************/
     //去除空格  type 1-所有空格  2-前后空格  3-前空格 4-后空格
     //trim('  1235asd',1)
     //result：1235asd
+
+    /**
+     * @description: 111
+     * @param {type} 
+     * @return: 
+     */
     trim: function (str, type) {
         switch (type) {
             case 1:
@@ -74,7 +92,7 @@ var ecDo = {
         return text;
     },
     //字符串替换(字符串,要替换的字符或者正则表达式（不要写g）,替换成什么)
-    //ecDo.replaceAll('这里是上海，中国第三大城市，广东省省会，简称穗，','上海','广州')
+    //Tool.replaceAll('这里是上海，中国第三大城市，广东省省会，简称穗，','上海','广州')
     //result："这里是广州，中国第三大城市，广东省省会，简称穗，"
     replaceAll: function (str, AFindText, ARepText) {
         let raRegExp = new RegExp(AFindText, "g");
@@ -196,29 +214,29 @@ var ecDo = {
     //如果需要过滤多种字符，type参数使用,分割，如下栗子
     //过滤字符串的html标签，大写字母，中文，特殊字符，全部替换成*,但是特殊字符'%'，'?'，除了这两个，其他特殊字符全部清除
     //var str='asd    654a大蠢sasdasdASDQWEXZC6d5#%^*^&*^%^&*$\\"\'#@!()*/-())_\'":"{}?<div></div><img src=""/>啊实打实大蠢猪自行车这些课程';
-    // ecDo.filterStr(str,'html,WORD,chinese,special','*','%?')
+    // Tool.filterStr(str,'html,WORD,chinese,special','*','%?')
     //result："asd    654a**sasdasd*********6d5#%^*^&*^%^&*$\"'#@!()*/-())_'":"{}?*****************"
     filterStr: function (str, type, restr, spstr) {
-        var typeArr = type.split(','), _str = str;
+        var typeArr = type.split(','),
+            _str = str;
         for (var i = 0, len = typeArr.length; i < len; i++) {
             //是否是过滤特殊符号
             if (typeArr[i] === 'special') {
                 var pattern, regText = '$()[]{}?\|^*+./\"\'+';
                 //是否有哪些特殊符号需要保留
                 if (spstr) {
-                    var _spstr = spstr.split(""), _regText = "[^0-9A-Za-z\\s";
+                    var _spstr = spstr.split(""),
+                        _regText = "[^0-9A-Za-z\\s";
                     for (var j = 0, len1 = _spstr.length; j < len1; j++) {
                         if (regText.indexOf(_spstr[j]) === -1) {
                             _regText += _spstr[j];
-                        }
-                        else {
+                        } else {
                             _regText += '\\' + _spstr[j];
                         }
                     }
                     _regText += ']'
                     pattern = new RegExp(_regText, 'g');
-                }
-                else {
+                } else {
                     pattern = new RegExp("[^0-9A-Za-z\\s]", 'g')
                 }
 
@@ -251,14 +269,15 @@ var ecDo = {
         return _str;
     },
     //格式化处理字符串
-    //ecDo.formatText('1234asda567asd890')
+    //Tool.formatText('1234asda567asd890')
     //result："12,34a,sda,567,asd,890"
-    //ecDo.formatText('1234asda567asd890',4,' ')
+    //Tool.formatText('1234asda567asd890',4,' ')
     //result："1 234a sda5 67as d890"
-    //ecDo.formatText('1234asda567asd890',4,'-')
+    //Tool.formatText('1234asda567asd890',4,'-')
     //result："1-234a-sda5-67as-d890"
     formatText: function (str, size, delimiter) {
-        var _size = size || 3, _delimiter = delimiter || ',';
+        var _size = size || 3,
+            _delimiter = delimiter || ',';
         var regText = '\\B(?=(\\w{' + _size + '})+(?!\\w))';
         var reg = new RegExp(regText, 'g');
         return str.replace(reg, _delimiter);
@@ -270,31 +289,36 @@ var ecDo = {
     //result：7
     longestWord: function (str, splitType) {
         var _splitType = splitType || /\s+/g,
-            _max = 0,_item='';
+            _max = 0,
+            _item = '';
         var strArr = str.split(_splitType);
         strArr.forEach(function (item) {
             if (_max < item.length) {
                 _max = item.length
-                _item=item;
+                _item = item;
             }
         })
-        return {el:_item,max:_max};
+        return {
+            el: _item,
+            max: _max
+        };
     },
     //句中单词首字母大写 (Title Case a Sentence)
     //这个我也一直在纠结，英文标题，即使是首字母大写，也未必每一个单词的首字母都是大写的，但是又不知道哪些应该大写，哪些不应该大写
-    //ecDo.titleCaseUp('this is a title')
+    //Tool.titleCaseUp('this is a title')
     //"This Is A Title"
     titleCaseUp: function (str, splitType) {
         var _splitType = splitType || /\s+/g;
         var strArr = str.split(_splitType),
-            result = "", _this = this
+            result = "",
+            _this = this
         strArr.forEach(function (item) {
             result += _this.changeCase(item, 1) + ' ';
         })
         return this.trim(result, 4)
     },
 
-//****************************数组*****************************/
+    //****************************数组*****************************/
 
     //数组去重
     removeRepeatArray: function (arr) {
@@ -382,7 +406,10 @@ var ecDo = {
         }
         //保存结果{el-'元素'，count-出现次数}
         for (var o in obj) {
-            arr1.push({el: o, count: obj[o]});
+            arr1.push({
+                el: o,
+                count: obj[o]
+            });
         }
         //排序（降序）
         arr1.sort(function (n1, n2) {
@@ -427,7 +454,8 @@ var ecDo = {
         if (!keys) {
             return arr
         }
-        var _keys = keys.split(','), newArrOne = {};
+        var _keys = keys.split(','),
+            newArrOne = {};
         //是否只是需要获取某一项的值
         if (_keys.length === 1) {
             for (var i = 0, len = arr.length; i < len; i++) {
@@ -452,7 +480,8 @@ var ecDo = {
     //result：[{b:2},{b:3},{b:9},{b:2},{b:5}]
     filterOptionArray: function (arr, keys) {
         var newArr = []
-        var _keys = keys.split(','), newArrOne = {};
+        var _keys = keys.split(','),
+            newArrOne = {};
         for (var i = 0, len = arr.length; i < len; i++) {
             newArrOne = {};
             for (var key in arr[i]) {
@@ -467,13 +496,14 @@ var ecDo = {
     },
     //对象数组的排序
     //var arr=[{a:1,b:2,c:9},{a:2,b:3,c:5},{a:5,b:9},{a:4,b:2,c:5},{a:4,b:5,c:7}]
-    //ecDo.arraySort(arr,'a,b')a是第一排序条件，b是第二排序条件
+    //Tool.arraySort(arr,'a,b')a是第一排序条件，b是第二排序条件
     //result：[{"a":1,"b":2,"c":9},{"a":2,"b":3,"c":5},{"a":4,"b":2,"c":5},{"a":4,"b":5,"c":7},{"a":5,"b":9}]
     arraySort: function (arr, sortText) {
         if (!sortText) {
             return arr
         }
-        var _sortText = sortText.split(',').reverse(), _arr = arr.slice(0);
+        var _sortText = sortText.split(',').reverse(),
+            _arr = arr.slice(0);
         for (var i = 0, len = _sortText.length; i < len; i++) {
             _arr.sort(function (n1, n2) {
                 return n1[_sortText[i]] - n2[_sortText[i]]
@@ -483,7 +513,8 @@ var ecDo = {
     },
     //数组扁平化
     steamroller: function (arr) {
-        var newArr = [],_this=this;
+        var newArr = [],
+            _this = this;
         for (var i = 0; i < arr.length; i++) {
             if (Array.isArray(arr[i])) {
                 // 如果是数组，调用(递归)steamroller 将其扁平化
@@ -526,7 +557,53 @@ var ecDo = {
     //      return newArr;
     //  },
 
-//****************************对象及其他*****************************/
+    //****************************对象及其他*****************************/
+    // 判断对象param是否为空
+    isEmpty: function (param) {
+        switch (typeof param) {
+            case 'undefined':
+                return true;
+                break;
+            case 'string':
+                if (param.replace(/(^[ \t\n\r]*)|([ \t\n\r]*$)/g, '').length == 0) {
+                    return true;
+                }
+                break;
+            case 'boolean':
+                if (!param) {
+                    return true;
+                }
+                break;
+            case 'number':
+                if (param === 0 || isNaN(param)) {
+                    return true;
+                }
+                break;
+            case 'object':
+                if (JSON.stringify(param) == '[]' || JSON.stringify(param) == '{}' || JSON.stringify(param) == 'null') {
+                    return true;
+                }
+                break;
+            default:
+                break;
+        }
+        return false;
+    },
+
+    // 判断是否为字符串
+    isString: function(str) {
+        return Object.prototype.toString.call(str) === "[object String]";
+    },
+    
+    // 判断是否为函数
+    isFunction: function(fun) {
+        return Object.prototype.toString.call(fun) === "[object Function]";
+    },
+
+    // 判断是否为对象
+    isObject: function(obj) {
+        return Object.prototype.toString.call(obj) === "[object Object]";
+    },
 
     //适配rem
     getFontSize: function (_client) {
@@ -549,6 +626,7 @@ var ecDo = {
         //文档加载完成时，触发函数
         doc.addEventListener('DOMContentLoaded', recalc, false);
     },
+    
     //到某一个时间的倒计时
     //getEndTime('2017/7/22 16:0:0')
     //result："剩余时间6天 2小时 28 分钟20 秒"
@@ -566,7 +644,12 @@ var ecDo = {
             m = Math.floor(t / 1000 / 60 % 60);
             s = Math.floor(t / 1000 % 60);
         }
-        return {d:d,h:h,m:m,s:s};
+        return {
+            d: d,
+            h: h,
+            m: m,
+            s: s
+        };
     },
     //随进产生颜色
     randomColor: function () {
@@ -673,13 +756,13 @@ var ecDo = {
     filterParams: function (obj) {
         var _newPar = {};
         for (var key in obj) {
-            if ((obj[key] === 0 ||obj[key] === false|| obj[key]) && obj[key].toString().replace(/(^\s*)|(\s*$)/g, '') !== '') {
+            if ((obj[key] === 0 || obj[key] === false || obj[key]) && obj[key].toString().replace(/(^\s*)|(\s*$)/g, '') !== '') {
                 _newPar[key] = obj[key];
             }
         }
         return _newPar;
     },
-//****************************cookie****************************/
+    //****************************cookie****************************/
     //设置cookie
     setCookie: function (name, value, iDay) {
         var oDate = new Date();
@@ -688,7 +771,8 @@ var ecDo = {
     },
     //获取cookie
     getCookie: function (name) {
-        var arr = document.cookie.split('; '),arr2;
+        var arr = document.cookie.split('; '),
+            arr2;
         for (var i = 0; i < arr.length; i++) {
             arr2 = arr[i].split('=');
             if (arr2[0] == name) {
@@ -702,15 +786,14 @@ var ecDo = {
         this.setCookie(name, 1, -1);
     },
 
-/*DOM*/
+    /*DOM*/
 
     //检测对象是否有哪个类名
     hasClass: function (obj, classStr) {
         if (obj.className && this.trim(obj.className, 1) !== "") {
             var arr = obj.className.split(/\s+/); //这个正则表达式是因为class可以有多个,判断是否包含
             return (arr.indexOf(classStr) == -1) ? false : true;
-        }
-        else {
+        } else {
             return false;
         }
 
@@ -723,8 +806,7 @@ var ecDo = {
                     obj[i].className += " " + classStr;
                 }
             }
-        }
-        else {
+        } else {
             if (!this.hasClass(obj, classStr)) {
                 obj.className += " " + classStr;
             }
@@ -739,8 +821,7 @@ var ecDo = {
                     obj[i].className = obj[i].className.replace(reg, '');
                 }
             }
-        }
-        else {
+        } else {
             if (this.hasClass(obj, classStr)) {
                 var reg = new RegExp('(\\s|^)' + classStr + '(\\s|$)');
                 obj.className = obj.className.replace(reg, '');
@@ -753,7 +834,7 @@ var ecDo = {
         this.addClass(obj, newName);
     },
     //获取兄弟节点
-    //ecDo.siblings(obj,'#id')
+    //Tool.siblings(obj,'#id')
     siblings: function (obj, opt) {
         var a = []; //定义一个数组，用来存o的兄弟元素
         var p = obj.previousSibling;
@@ -773,18 +854,16 @@ var ecDo = {
         }
         if (opt) {
             var _opt = opt.substr(1);
-            var b = [];//定义一个数组，用于储存过滤a的数组
+            var b = []; //定义一个数组，用于储存过滤a的数组
             if (opt[0] === '.') {
                 b = a.filter(function (item) {
                     return item.className === _opt
                 });
-            }
-            else if (opt[0] === '#') {
+            } else if (opt[0] === '#') {
                 b = a.filter(function (item) {
                     return item.id === _opt
                 });
-            }
-            else {
+            } else {
                 b = a.filter(function (item) {
                     return item.tagName.toLowerCase() === opt
                 });
@@ -812,17 +891,16 @@ var ecDo = {
         if (arguments.length === 1) {
             return obj.innerHTML;
         } else if (arguments.length === 2) {
-            obj.innerHTML = this.filterStr(arguments[1],'html');
+            obj.innerHTML = this.filterStr(arguments[1], 'html');
         }
     },
     //显示隐藏
     show: function (obj) {
-        var blockArr=['div','li','ul','ol','dl','table','article','h1','h2','h3','h4','h5','h6','p','hr','header','footer','details','summary','section','aside','']
-        if(blockArr.indexOf(obj.tagName.toLocaleLowerCase())===-1){
-            obj.style.display ='inline';
-        }
-        else{
-            obj.style.display ='block';
+        var blockArr = ['div', 'li', 'ul', 'ol', 'dl', 'table', 'article', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'hr', 'header', 'footer', 'details', 'summary', 'section', 'aside', '']
+        if (blockArr.indexOf(obj.tagName.toLocaleLowerCase()) === -1) {
+            obj.style.display = 'inline';
+        } else {
+            obj.style.display = 'block';
         }
     },
     hide: function (obj) {
@@ -852,10 +930,8 @@ var ecDo = {
         obj.url = obj.url || '';
         obj.async = obj.async || true;
         obj.data = obj.data || null;
-        obj.success = obj.success || function () {
-            };
-        obj.error = obj.error || function () {
-            };
+        obj.success = obj.success || function () {};
+        obj.error = obj.error || function () {};
         var xmlHttp = null;
         if (XMLHttpRequest) {
             xmlHttp = new XMLHttpRequest();
@@ -884,8 +960,9 @@ var ecDo = {
         };
     },
     //图片没加载出来时用一张图片代替
-    aftLoadImg: function (obj, url, errorUrl,cb) {
-        var oImg = new Image(), _this = this;
+    aftLoadImg: function (obj, url, errorUrl, cb) {
+        var oImg = new Image(),
+            _this = this;
         oImg.src = url;
         oImg.onload = function () {
             obj.src = oImg.src;
@@ -893,8 +970,8 @@ var ecDo = {
                 cb(obj);
             }
         }
-        oImg.onerror=function () {
-            obj.src=errorUrl;
+        oImg.onerror = function () {
+            obj.src = errorUrl;
             if (cb && _this.istype(cb, 'function')) {
                 cb(obj);
             }
@@ -918,7 +995,10 @@ var ecDo = {
     //		}
     //}
     loadImg: function (className, num, errorUrl) {
-        var _className = className || 'ec-load-img', _num = num || 0, _this = this,_errorUrl=errorUrl||null;
+        var _className = className || 'ec-load-img',
+            _num = num || 0,
+            _this = this,
+            _errorUrl = errorUrl || null;
         var oImgLoad = document.getElementsByClassName(_className);
         for (var i = 0, len = oImgLoad.length; i < len; i++) {
             //如果图片已经滚动到指定的高度
@@ -969,7 +1049,7 @@ var ecDo = {
         return "(" + str + ")";
     },
     //关键字加标签（多个关键词用空格隔开）
-    //ecDo.findKey('守侯我oaks接到了来自下次你离开快乐吉祥留在开城侯','守侯 开','i')
+    //Tool.findKey('守侯我oaks接到了来自下次你离开快乐吉祥留在开城侯','守侯 开','i')
     //"<i>守侯</i>我oaks接到了来自下次你离<i>开</i>快乐吉祥留在<i>开</i>城侯"
     findKey: function (str, key, el) {
         var arr = null,
@@ -988,9 +1068,9 @@ var ecDo = {
         return content.replace(Reg, "<" + _el + ">$1</" + _el + ">");
     },
     //数据类型判断
-    //ecDo.istype([],'array')
+    //Tool.istype([],'array')
     //true
-    //ecDo.istype([])
+    //Tool.istype([])
     //'[object Array]'
     istype: function (o, type) {
         if (type) {
@@ -1049,7 +1129,9 @@ var ecDo = {
         var timer = null;
         var t_start;
         return function () {
-            var context = this, args = arguments, t_cur = +new Date();
+            var context = this,
+                args = arguments,
+                t_cur = +new Date();
             //先清理上一次的调用触发（上一次调用触发事件不执行）
             clearTimeout(timer);
             //如果不存触发时间，那么当前的时间就是触发时间
@@ -1068,7 +1150,56 @@ var ecDo = {
                 }, delay);
             }
         };
-    }
+    },
+
+    //****************************时间*****************************/
+    // 时间戳（毫秒）格式化为指定的日期格式
+    millisecond2Date: function (millisecond, format) {
+        var millisecondInt = parseInt(millisecond);
+        if (!isNaN(millisecondInt)) {
+            var millisecondLen = millisecondInt.toString().length;
+            if (millisecondLen === 10) {
+                millisecondInt = millisecondInt * 1000;
+            }
+            if (millisecondLen !== 10 && millisecondLen !== 13) {
+                return millisecond;
+            }
+            var date = new Date(millisecondInt);
+            var map = {
+                'M': date.getMonth() + 1, // 月份
+                'D': date.getDate(), // 日
+                'h': date.getHours(), // 小时
+                'm': date.getMinutes(), // 分
+                's': date.getSeconds(), // 秒
+                'q': Math.floor((date.getMonth() + 3) / 3), // 季度
+                'S': date.getMilliseconds() // 毫秒
+            };
+            format = format.replace(/([YMDhmsqS])+/g, function (all, t) {
+                var v = map[t];
+                if (v !== undefined) {
+                    if (all.length > 1) {
+                        v = '0' + v;
+                        v = v.substr(v.length - 2);
+                    }
+                    return v;
+                } else if (t === 'Y') {
+                    return (date.getFullYear() + '').substr(4 - all.length);
+                }
+                return all;
+            });
+            return format;
+        } else {
+            return millisecond;
+        }
+    },
+    // 日期转时间戳
+    date2Millisecond: function (date) {
+        var millisecond = 0;
+        date = date.replace(new RegExp("年|月", "gm"), "/");
+        date = date.replace(new RegExp("时|分", "gm"), ":");
+        date = date.replace(new RegExp("日|秒", "gm"), "");
+        date = date.replace(new RegExp("-", "gm"), "/");
+        millisecond = new Date(date).getTime();
+        return millisecond;
+    },
 }
-
-
