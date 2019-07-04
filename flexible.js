@@ -1,5 +1,5 @@
 /**
- * 响应式布局
+ * 响应式rem布局
  */
 (function(doc, win) {
 
