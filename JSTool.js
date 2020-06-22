@@ -5,22 +5,22 @@
  */
 function JSTool() {
 
-	if (typeof this.millisecond2Date !== "function") {
-		/**
-		 * 日期转时间戳
-		 * @param  {[date]} date [日期转换为毫秒数]
-		 */
-		JSTool.prototype.date2Millisecond = function(date) {
-		    var millisecond = 0;
-		    date = date.replace(new RegExp("年|月", "gm"), "/");
-		    date = date.replace(new RegExp("时|分", "gm"), ":");
-		    date = date.replace(new RegExp("日|秒", "gm"), "");
-		    date = date.replace(new RegExp("-", "gm"), "/");
-		    millisecond = new Date(date).getTime();
+    if (typeof this.millisecond2Date !== "function") {
+        /**
+         * 日期转时间戳
+         * @param  {[date]} date [日期转换为毫秒数]
+         */
+        JSTool.prototype.date2Millisecond = function(date) {
+            var millisecond = 0;
+            date = date.replace(new RegExp("年|月", "gm"), "/");
+            date = date.replace(new RegExp("时|分", "gm"), ":");
+            date = date.replace(new RegExp("日|秒", "gm"), "");
+            date = date.replace(new RegExp("-", "gm"), "/");
+            millisecond = new Date(date).getTime();
 
-		    return millisecond;
-		}
-	}
+            return millisecond;
+        }
+    }
 
     if (typeof this.millisecond2Date !== "function") {
         /**
@@ -228,19 +228,19 @@ function JSTool() {
         /**
          * 判断地址是否为有效网址
          */
-    	JSTool.prototype.isValidURL = function(chars) {
-		  	var re=/^([hH][tT]{2}[pP]:\/\/|[hH][tT]{2}[pP][sS]:\/\/)(\S+\.\S+)$/;
+        JSTool.prototype.isValidURL = function(chars) {
+            var re = /^([hH][tT]{2}[pP]:\/\/|[hH][tT]{2}[pP][sS]:\/\/)(\S+\.\S+)$/;
 
-			if (!isEmpty(chars)) {
-				chars = chars.trim();
-			if (chars.match(re) == null)
-			 	return false;
-			else
-				return true;
-			}
+            if (!isEmpty(chars)) {
+                chars = chars.trim();
+                if (chars.match(re) == null)
+                    return false;
+                else
+                    return true;
+            }
 
-			return false;
-    	}
+            return false;
+        }
     }
 
     if (typeof this.getBrowserVersion !== "function") {
@@ -256,11 +256,11 @@ function JSTool() {
                 trident: u.indexOf('Trident') > -1, //IE内核
                 presto: u.indexOf('Presto') > -1, //opera内核
                 webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
-                gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1,//火狐内核
+                gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
                 mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
                 ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
                 android: u.indexOf('Android') > -1 || u.indexOf('Adr') > -1, //android终端
-                iPhone: u.indexOf('iPhone') > -1 , //是否为iPhone或者QQHD浏览器
+                iPhone: u.indexOf('iPhone') > -1, //是否为iPhone或者QQHD浏览器
                 iPad: u.indexOf('iPad') > -1, //是否iPad
                 webApp: u.indexOf('Safari') == -1, //是否web应该程序，没有头部与底部
                 weixin: u.indexOf('MicroMessenger') > -1, //是否微信
@@ -268,4 +268,22 @@ function JSTool() {
             };
         }
     }
+
+    if (typeof this.getRandomArrayElements !== "function") {
+        /**
+         * 从数组中随机取出n个元素组成新数组
+         * @return {[array]} 新数组
+         */
+        JSTool.prototype.getRandomArrayElements = function() {
+            var shuffled = arr.slice(0), i = arr.length, min = i - count, temp, index;
+            while (i-- > min) {
+                index = Math.floor((i + 1) * Math.random());
+                temp = shuffled[index];
+                shuffled[index] = shuffled[i];
+                shuffled[i] = temp;
+            }
+            return shuffled.slice(min);
+        }
+    }
+
 }
