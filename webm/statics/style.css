@@ -1,0 +1,28 @@
+.video-wrapper {
+    position: relative;
+}
+.video {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 400px;
+    height: 300px;
+    z-index: 2;
+    outline: none;
+}
+.img {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+}
+.bg {
+    position: absolute;
+    left: 116px;
+    top: 98px;
+    width: 270px;
+    height: 172px;
+    background-color: rgba(0, 0, 0, 1);
+    z-index: 1;
+}

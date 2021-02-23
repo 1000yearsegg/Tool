@@ -1,0 +1,57 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-07-25 18:33:38
+ * @LastEditTime: 2020-07-27 16:09:04
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: /webm/video.html
+--> 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>视频测试</title>
+    <link rel="stylesheet" href="./statics/style.css">
+</head>
+<body>
+    <div id="video-wrapper" class="video-wrapper">
+        <img class="img" src="./statics/star.jpg" alt="">
+        <video muted id="video" class="video" autoplay="autoplay">
+            <source src="./statics/test.webm" type="video/webm">
+        </video>
+    </div>
+<!-- <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script> -->
+<script>
+    var video = document.getElementById("video");
+
+    // 监听播放准备就绪
+    video.oncanplay = function(){
+        console.log("准备就绪");
+    };
+
+    // loadedmetadata
+    video.addEventListener('loadedmetadata',function(){
+        console.log("加载元数据");
+    });
+
+    // 监听播放开始
+    video.addEventListener('play',function(){
+        console.log("开始播放");
+        // video.muted=false;
+    });
+
+    // 监听播放暂停
+    video.addEventListener('pause',function(){
+        console.log("播放暂停");
+    }); 
+
+    // 监听播放结束
+    video.addEventListener('ended',function(){
+        console.log("播放结束");
+    });
+
+
+</script>
+</body>
+</html>
